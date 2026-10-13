@@ -4,9 +4,45 @@ export interface SalaryData {
   currency: string;
   workingHours: number;
   holidayDays: number;
+  workStartTime: string;
+  workEndTime: string;
+  breakPaid: boolean;
+  overtimeMultiplier: number;
+  bonusPlan: BonusPlan;
+  privacyMode: PrivacyMode;
+  tone: EncouragementTone;
 }
 
 export type Period = 'yearly' | 'monthly' | 'weekly' | 'hourly';
+export type BonusType = 'none' | 'fixed' | 'months' | 'percentage' | 'target';
+export type PrivacyMode = 'visible' | 'masked' | 'hidden';
+export type EncouragementTone = 'gentle' | 'funny' | 'calm' | 'direct';
+
+export interface BonusPlan {
+  type: BonusType;
+  value: number;
+  personalCoefficient?: number;
+  companyCoefficient?: number;
+  attendanceCoefficient?: number;
+}
+
+export interface PersistedWorkSession {
+  elapsedMs: number;
+  unpaidBreakMs: number;
+  paidBreakMs: number;
+  isRunning: boolean;
+  breakMode: 'none' | 'paid' | 'unpaid';
+  overtimeConfirmed: boolean;
+  savedAt: number;
+}
+
+export const bonusTypeLabels: Record<BonusType, string> = {
+  none: '暂不设置',
+  fixed: '固定奖金',
+  months: '固定月数',
+  percentage: '年薪比例',
+  target: '目标率 × 绩效系数',
+};
 
 export const periodLabels: Record<Period, string> = {
   yearly: '年薪',
@@ -57,3 +93,36 @@ export const currencySymbols: Record<string, string> = {
   'GBP': '£',
   'JPY': '¥'
 };
+
+export interface DelightItem {
+  emoji: string;
+  label: string;
+  amount: number;
+}
+
+const delightCatalog: Record<string, DelightItem[]> = {
+  CNY: [
+    { emoji: '☕️', label: '一杯热咖啡', amount: 18 },
+    { emoji: '🥤', label: '一杯奶茶', amount: 25 },
+    { emoji: '🍜', label: '一顿好好吃的午饭', amount: 45 },
+    { emoji: '🚕', label: '一次放心打车', amount: 80 },
+    { emoji: '🍲', label: '一顿热气腾腾的火锅', amount: 180 },
+    { emoji: '🎧', label: '一份想买很久的小礼物', amount: 500 },
+  ],
+  USD: [
+    { emoji: '☕️', label: 'a coffee', amount: 5 },
+    { emoji: '🥗', label: 'a good lunch', amount: 15 },
+    { emoji: '🚕', label: 'a comfortable ride home', amount: 30 },
+    { emoji: '🎧', label: 'a small treat', amount: 80 },
+  ],
+};
+
+export function getDelightItems(currency: string): DelightItem[] {
+  if (delightCatalog[currency]) return delightCatalog[currency];
+
+  const fallbackRate = currency === 'JPY' ? 20 : 1;
+  return delightCatalog.USD.map((item) => ({
+    ...item,
+    amount: item.amount * fallbackRate,
+  }));
+}

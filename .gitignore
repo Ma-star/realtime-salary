@@ -10,6 +10,12 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+work
+outputs
+macos/.build
+macos/dist
+reports
+research_notes
 *.local
 .env
 
@@ -18,6 +24,7 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+*.tsbuildinfo
 *.suo
 *.ntvs*
 *.njsproj

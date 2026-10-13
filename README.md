@@ -1,113 +1,79 @@
-# RealtimeSalary 💰
+# 下班回血器 💰
 
-> 实时工资计算器 - 看着你的收入每秒增长
+> 把“今天又熬了多久”翻译成“我正在为自己积累多少选择权”。
 
-一个有趣的实时工资计算器，可以按秒显示你正在赚取的收入。支持多种货币和计算周期，让你直观地感受时间就是金钱。
+下班回血器是一款面向打工人的实时工资与情绪陪伴工具，提供 Web、iPhone 和 macOS 三个平台版本。它不仅计算每秒收入，还会单独核算奖金、加班和休息，在下班时完成一次有边界感的“封账”。
 
-![RealtimeSalary Demo](realtime-salary.gif)
+本仓库基于 [mereithhh/realtime-salary](https://github.com/mereithhh/realtime-salary) 二次开发，并保留原项目历史。
 
-## ✨ 特性
+## 下载 macOS 客户端
 
-- 🕐 **实时计算** - 按秒实时更新收入显示
-- 💱 **多货币支持** - 支持人民币、美元等多种货币
-- 📊 **多种计算周期** - 支持年薪、月薪、日薪等不同计算方式
-- 🎯 **精确计算** - 精确到小数点后多位
-- 🌙 **深色模式** - 支持明暗主题切换
-- 📱 **响应式设计** - 完美适配手机和桌面端
-- ⏱️ **计时功能** - 显示已工作时间
-- 🎨 **简洁界面** - 干净直观的用户界面
+[从 GitHub Releases 下载最新版](https://github.com/Ma-star/realtime-salary/releases/latest)
 
-## 🚀 在线体验
+- 支持 macOS 14 及以上
+- 通用二进制：Apple 芯片与 Intel Mac 均可运行
+- 首次打开若被系统拦截，请在 Finder 中右键 App，选择“打开”
+- 自用构建采用本地签名，未经过 Apple Developer ID 公证
 
-[立即体验 RealtimeSalary](https://realtime-salary.mereith.com)
+## 功能
 
-## 📱 功能展示
+- 实时工资、每秒/每小时价值与下班倒计时
+- 月薪、年薪、日薪、时薪等计算周期
+- 固定奖金、月薪倍数、年薪比例、目标奖金 × 绩效系数
+- 带薪/无薪休息与加班倍率单独核算
+- 暂停、继续、重置与五步下班结算
+- 心情记录、放下仪式、劳动结晶与脱敏战报
+- 金额默认打码、“老板来了”一键隐藏
+- 原生客户端使用 AES-GCM 加密文件和本机 Keychain 密钥
+- 原生客户端不要求登录，不接入分析服务，不访问网络
 
-### 设置页面
-- 选择货币类型（人民币、美元等）
-- 输入薪资金额
-- 选择计算周期（年薪/月薪/日薪等）
+## 平台
 
-### 实时显示页面
-- 大字体显示已赚取金额
-- 每秒收入详细显示
-- 工作计时器
-- 月薪/年薪总额显示
-
-## 🛠️ 技术栈
-
-- **前端框架**: [React/原生JS]
-- **样式**: CSS3 / Tailwind CSS
-- **构建工具**: Vite / Webpack
-- **数学计算**: 高精度数值计算
-- **响应式**: Flexbox / Grid
-
-## 💻 本地开发
-
-### 环境要求
-
-- Node.js >= 16.0.0
-- npm >= 8.0.0
-
-### 快速开始
+### Web
 
 ```bash
-# 克隆项目
-git clone https://github.com/mereithhh/realtime-salary.git
-
-# 进入项目目录
-cd realtime-salary
-
-# 安装依赖
 npm install
-
-# 启动开发服务器
 npm run dev
+```
 
-# 构建生产版本
+运行测试和生产构建：
+
+```bash
+npm test
 npm run build
 ```
 
-## 📐 计算逻辑
+### macOS
 
-```javascript
-// 年薪转换为每秒收入
-const perSecond = annualSalary / (365 * 24 * 60 * 60);
+macOS 客户端使用 SwiftUI。安装 Xcode Command Line Tools 后运行：
 
-// 月薪转换为每秒收入  
-const perSecond = monthlySalary / (30 * 24 * 60 * 60);
-
-// 实时累计收入
-const currentEarnings = perSecond * elapsedSeconds;
+```bash
+./macos/build.sh
 ```
 
-## 🎯 使用场景
+成品会生成在 `macos/dist/下班回血器-macOS.zip`。实现说明见 [macos/README.md](macos/README.md)。
 
-- 💼 **工作激励** - 看着收入增长保持工作动力
-- 📈 **时间价值感知** - 直观感受时间的价值
-- 🎓 **理财教育** - 帮助理解被动收入概念
-- 🎮 **娱乐工具** - 有趣的数字游戏
+### iPhone
 
-## 🌟 截图
+iOS 17 及以上，使用 Xcode 打开 `ios/RealtimeSalary.xcodeproj`，选择自己的 Apple Developer Team 后运行。详细说明见 [ios/README.md](ios/README.md)。
 
-| 设置页面 | 计算页面 |
-|---------|---------|
-| ![设置页面](screenshots/setup.png) | ![计算页面](screenshots/ticker.png) |
+## 隐私设计
 
-## 🤝 贡献指南
+- 默认隐藏真实金额，查看金额需要本机身份验证
+- 薪资、班次和结算记录加密后只保存在设备本地
+- 密钥保存在 Keychain，不与加密数据放在一起
+- 分享内容默认脱敏，不显示工资数字
+- 用户可以随时清除全部本机数据
 
-欢迎提交 Issue 和 Pull Request！
+## 产品文档
 
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 创建 Pull Request
+- [产品方向](PRODUCT.md)
+- [完整 PRD](docs/PRD.md)
 
-## 📄 许可证
+## 截图
 
-本项目基于 MIT 许可证开源
+| 设置页面 | 实时页面 |
+|---|---|
+| ![设置页面](screenshots/setup.png) | ![实时页面](screenshots/ticker.png) |
 
----
-
-⭐ 如果这个项目对你有帮助，请给个 Star 支持一下！
+欢迎提交 Issue 和 Pull Request。
