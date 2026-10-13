@@ -4,6 +4,8 @@
 
 下班回血器是一款面向打工人的实时工资与情绪陪伴工具，提供 Web、iPhone 和 macOS 三个平台版本。它不仅计算每秒收入，还会单独核算奖金、加班和休息，在下班时完成一次有边界感的“封账”。
 
+![下班回血器 macOS 客户端](screenshots/macos-dashboard.png)
+
 本仓库基于 [mereithhh/realtime-salary](https://github.com/mereithhh/realtime-salary) 二次开发，并保留原项目历史。
 
 ## 下载 macOS 客户端
@@ -69,11 +71,5 @@ iOS 17 及以上，使用 Xcode 打开 `ios/RealtimeSalary.xcodeproj`，选择�
 
 - [产品方向](PRODUCT.md)
 - [完整 PRD](docs/PRD.md)
-
-## 截图
-
-| 设置页面 | 实时页面 |
-|---|---|
-| ![设置页面](screenshots/setup.png) | ![实时页面](screenshots/ticker.png) |
 
 欢迎提交 Issue 和 Pull Request。
